@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "divisaEntrada": "EUR",
+    "divisaSalida": "PEN",
+    "valorAConvertir": 100.0,
+    "resultadoConvertido": 390.52,
+    "numTransaccion": 1
+  },
+  {
+    "divisaEntrada": "USD",
+    "divisaSalida": "PEN",
+    "valorAConvertir": 1000.0,
+    "resultadoConvertido": 3764.5,
+    "numTransaccion": 2
+  }
+]

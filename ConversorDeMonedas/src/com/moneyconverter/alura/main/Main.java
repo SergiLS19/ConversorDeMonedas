@@ -19,13 +19,13 @@ public class Main {
         Historial historial = new Historial();
         ConnectionHTTP con = new ConnectionHTTP();
         TransaccionER transER;
-        List<TransaccionER> transacciones = new ArrayList<>();
+        List<Transaccion> transacciones = new ArrayList<>();
 
         do {
             System.out.println("Conversor de monedas");
             System.out.println("-----------------------");
             System.out.println("1. Convertir monedas");
-            System.out.println("2. Revisar historial de monedas");
+            System.out.println("2. Revisar historial de transacciones");
             System.out.println("3. Exportar historial en formato JSON");
             System.out.println("4. Salir");
             opcion = sc.nextInt();
@@ -41,7 +41,6 @@ public class Main {
                     System.out.println("5. Libras esterlinas");
                     int opcionEntrada = sc.nextInt();
 
-                    // Asignar la divisa de entrada
                     switch (opcionEntrada) {
                         case 1: divisaEntrada = "USD"; break;
                         case 2: divisaEntrada = "EUR"; break;
@@ -51,7 +50,6 @@ public class Main {
                         default: System.out.println("Opción inválida"); return;
                     }
 
-                    // Mostrar las opciones de divisas de salida, excluyendo la divisa de entrada
                     System.out.println("¿A qué moneda desea convertirla?");
                     System.out.println("------------------------------");
 
@@ -78,25 +76,31 @@ public class Main {
                     transER = con.obtenerTransaccionER(divisaEntrada, divisaSalida);
                     System.out.println("¿Cuánto desea convertir?");
                     saldoAConvertir = sc.nextDouble();
-
+                    transER = con.obtenerTransaccionER(divisaEntrada, divisaSalida);
                     if (transER != null) {
-                        double resultado = saldoAConvertir * transER.conversion_rates();
-                        System.out.println("Resultado: " + saldoAConvertir + " " + divisaEntrada + " = " + resultado + " " + divisaSalida);
+
+                        Transaccion transaccion = new Transaccion(transER, saldoAConvertir);
+                        historial.transacciones.add(transaccion);
+                        System.out.println("Resultado: " + transaccion.getResultadoConvertido() + " " + divisaSalida);
+
+                        transacciones.add(transaccion);
                     } else {
                         System.out.println("Error en la conversión.");
                     }
 
-                    transacciones.add(transER);
                     break;
                 }
 
                 case 2: {
-                    // Revisar historial
-                    System.out.println("Historial de conversiones:");
-//                    for (TransaccionER trans : transacciones) {
-//                        System.out.println("De " + trans.getDivisaEntrada() + " a " + trans.getDivisaSalida() +
-//                                ": Tasa de cambio = " + trans.getTasaCambio());
-//                    }
+                    System.out.println("Historial de transacciones");
+                    System.out.println("-------------------------------");
+                    if (transacciones.isEmpty()) {
+                        System.out.println("No hay conversiones en el historial.");
+                    } else {
+                        for (Transaccion transaccion : transacciones) {
+                            System.out.println(transaccion);
+                        }
+                    }
                     break;
                 }
 

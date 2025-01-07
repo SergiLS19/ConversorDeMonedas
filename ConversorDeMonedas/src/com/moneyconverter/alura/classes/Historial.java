@@ -10,11 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Historial {
-    List<Transaccion> transacciones = new ArrayList<>();
-    Gson gson = new GsonBuilder().create();
-    public void exportarHistorial() throws IOException {
-        FileWriter historial = new FileWriter("Historial.json");
-        historial.write(gson.toJson(transacciones));
-        historial.close();
+    public List<Transaccion> transacciones = new ArrayList<>();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public void exportarHistorial() {
+        try {
+            FileWriter historial = new FileWriter("Historial.json");
+            historial.write(gson.toJson(transacciones));
+            historial.close();
+            System.out.println("Historial exportado en formato JSON");
+        } catch (IOException e) {
+            System.out.println("Error al exportar el historial: " + e.getMessage());
+        }
     }
+
 }
