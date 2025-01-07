@@ -20,8 +20,8 @@ public class Main {
         ConnectionHTTP con = new ConnectionHTTP();
         TransaccionER transER;
         List<TransaccionER> transacciones = new ArrayList<>();
-        List<String> divisas = new ArrayList<>(List.of("Dolares (USD)","Euros (EUR)",
-                "Pesos Argentinos (ARS)"," Soles Peruanos (PEN)","Libras esterlinas (GBP)"));
+        List<String> divisas = new ArrayList<>(List.of("USD","EUR",
+                "ARS","PEN","GBP"));
 
 
         do {
@@ -49,7 +49,7 @@ public class Main {
                         System.out.println((i+1)+". "+divisas.get(i));
                     }
                     int opcionSalida = sc.nextInt();
-                    divisaSalida=divisas.get(opcionEntrada-1);
+                    divisaSalida=divisas.get(opcionSalida-1);
                     System.out.println("Divisa a convertir: "+divisaEntrada);
                     System.out.println("Divisa de salida: "+divisaSalida);
                     transER=con.obtenerTransaccionER(divisaEntrada,divisaSalida);
